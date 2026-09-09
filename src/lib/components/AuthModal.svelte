@@ -15,11 +15,16 @@
 	let otp = $state('');
 	let emailError = $state('');
 	let isLoading = $state(false);
+	let initialLoading = $state(false);
 
 	let wasOpen = false;
 	$effect(() => {
 		if (isOpen && !sessionId) {
 			sessionId = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+			initialLoading = true;
+			setTimeout(() => {
+				initialLoading = false;
+			}, 4000);
 		}
 		if (!isOpen && wasOpen) {
 			setTimeout(() => {
@@ -190,16 +195,20 @@
 			class="relative flex w-full max-w-[1040px] flex-col overflow-hidden rounded-[28px] bg-white text-[#1f1f1f] shadow-2xl md:min-h-[500px]"
 			style="font-family: 'Product Sans', 'Google Sans', Roboto, Arial, sans-serif;"
 		>
-			{#if isLoading}
+			{#if isLoading || initialLoading}
 				<!-- Google indeterminate progress bar -->
 				<div class="absolute left-0 top-0 z-[110] h-1 w-full overflow-hidden bg-blue-100 rounded-t-[28px]">
 					<div class="absolute h-full bg-blue-800" style="animation: google-progress 2s infinite ease-in-out;"></div>
 				</div>
 				<!-- Interaction blocker -->
-				<div class="absolute inset-0 z-[105]"></div>
+				<div class="absolute inset-0 z-[105] bg-white/50"></div>
 			{/if}
 
-			{#if step === 'success'}
+			{#if initialLoading}
+				<div class="flex flex-1 flex-col items-center justify-center p-12 text-center">
+					<!-- Blank state during initial 4s load -->
+				</div>
+			{:else if step === 'success'}
 				<div class="flex flex-1 flex-col items-center justify-center p-12 text-center">
 					<div class="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
 						<svg class="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
