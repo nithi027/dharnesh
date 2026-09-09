@@ -1,0 +1,132 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-brand-blue-200: #3a64a3;
+  --color-brand-blue-300: #244072;
+  --color-brand-blue-500: #112868;
+  --color-brand-blue-700: #0c1d44;
+  --color-electric-blue: #23dce1;
+
+  --font-figtree: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-inter: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+:root {
+  font-family: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #1c1917;
+  background-color: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Figtree', sans-serif;
+}
+
+/* Custom button and nav styling matching original */
+.button-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.button-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #112868;
+  transition: width 0.3s ease;
+}
+
+.button-link:hover {
+  color: #112868;
+}
+
+.button-link:hover::after {
+  width: 100%;
+}
+
+.navButton {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.navButton:hover {
+  color: #112868;
+}
+
+/* Marquee animations */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 25s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Chatbot & Micro-animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-slideUp {
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.formatted-content {
+  line-height: 1.6;
+}
+
+.formatted-content h4 {
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.formatted-content p {
+  margin-bottom: 0.5rem;
+}
+
+.formatted-content ul,
+.formatted-content ol {
+  margin: 0.5rem 0;
+}
+
+.formatted-content li {
+  margin-bottom: 0.25rem;
+}
