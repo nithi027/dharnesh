@@ -18,7 +18,8 @@
 		}
 	}
 
-	function openAuth() {
+	function openAuth(e) {
+		if (e) e.preventDefault();
 		closeMobile();
 		authOpen = true;
 	}
@@ -42,21 +43,21 @@
 			class="hidden items-center justify-center gap-[10px] font-medium text-stone-800 md:flex md:text-base lg:gap-3 xl:gap-4 2xl:text-lg"
 		>
 			<a
-				href="#!"
+				href="/"
 				onclick={openAuth}
 				class="navButton relative font-semibold text-brand-blue-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:rounded-full after:bg-brand-blue-500 after:content-['']"
 			>
 				Home
 			</a>
 			<a
-				href="#!"
+				href="/"
 				onclick={openAuth}
 				class="relative text-nowrap transition-colors duration-300 hover:text-brand-blue-500 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-brand-blue-500 after:transition-all after:duration-500 hover:after:w-full after:content-['']"
 			>
 				News Feed
 			</a>
-			<a href="#!" onclick={openAuth} class="button-link">Gallery</a>
-			<a href="#!" onclick={openAuth} class="button-link">FAQ</a>
+			<a href="/" onclick={openAuth} class="button-link">Gallery</a>
+			<a href="/" onclick={openAuth} class="button-link">FAQ</a>
 			<button type="button" onclick={openAuth} class="button-link cursor-pointer">Login</button>
 			<button
 				type="button"
@@ -119,14 +120,14 @@
 		<div
 			class="flex h-full flex-col items-center justify-center gap-6 pb-36 text-2xl font-semibold md:hidden"
 		>
-			<a href="#!" onclick={openAuth} class="button-link">Home</a>
-			<a href="#!" onclick={openAuth} class="button-link"
+			<a href="/" onclick={openAuth} class="button-link">Home</a>
+			<a href="/" onclick={openAuth} class="button-link"
 				>News Feed</a
 			>
-			<a href="#!" onclick={openAuth} class="button-link"
+			<a href="/" onclick={openAuth} class="button-link"
 				>Gallery</a
 			>
-			<a href="#!" onclick={openAuth} class="button-link">FAQ</a>
+			<a href="/" onclick={openAuth} class="button-link">FAQ</a>
 			<button type="button" onclick={openAuth} class="button-link cursor-pointer">Login</button>
 			<button
 				type="button"
