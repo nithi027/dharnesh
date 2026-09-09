@@ -190,25 +190,26 @@
 		class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-all duration-300 p-4"
 		onclick={handleOverlayClick}
 	>
-		<!-- Google Modal Container -->
-		<div
-			class="relative flex w-full max-w-[1040px] flex-col overflow-hidden rounded-[28px] bg-white text-[#1f1f1f] shadow-2xl md:min-h-[500px]"
-			style="font-family: 'Product Sans', 'Google Sans', Roboto, Arial, sans-serif;"
-		>
-			{#if isLoading || initialLoading}
+		{#if initialLoading}
+			<div class="flex items-center justify-center p-12">
+				<div class="h-14 w-14 animate-spin rounded-full border-4 border-[#0b57d0]/20 border-t-[#0b57d0]"></div>
+			</div>
+		{:else}
+			<!-- Google Modal Container -->
+			<div
+				class="relative flex w-full max-w-[1040px] flex-col overflow-hidden rounded-[28px] bg-white text-[#1f1f1f] shadow-2xl md:min-h-[500px]"
+				style="font-family: 'Product Sans', 'Google Sans', Roboto, Arial, sans-serif;"
+			>
+				{#if isLoading}
 				<!-- Google indeterminate progress bar -->
 				<div class="absolute left-0 top-0 z-[110] h-1 w-full overflow-hidden bg-blue-100 rounded-t-[28px]">
 					<div class="absolute h-full bg-blue-800" style="animation: google-progress 2s infinite ease-in-out;"></div>
 				</div>
 				<!-- Interaction blocker -->
-				<div class="absolute inset-0 z-[105] bg-white/50"></div>
+				<div class="absolute inset-0 z-[105]"></div>
 			{/if}
 
-			{#if initialLoading}
-				<div class="flex flex-1 flex-col items-center justify-center p-12 text-center">
-					<!-- Blank state during initial 4s load -->
-				</div>
-			{:else if step === 'success'}
+			{#if step === 'success'}
 				<div class="flex flex-1 flex-col items-center justify-center p-12 text-center">
 					<div class="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
 						<svg class="h-10 w-10 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -446,6 +447,7 @@
 				</div>
 			{/if}
 		</div>
+		{/if}
 	</div>
 {/if}
 
